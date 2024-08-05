@@ -1,0 +1,30 @@
+version: '3.2'
+services:
+  keycloak:
+    image: bitnami/keycloak:25.0.2    # please use fixed version for real world usage
+    environment:
+      KEYCLOAK_USER: admin
+      KEYCLOAK_PASSWORD: changeme
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+      DB_VENDOR: postgres
+      DB_DATABASE: keycloak
+      DB_PASSWORD: secret
+      DB_USER: keycloak
+      DB_ADDR: postgres
+    ports:
+      - 8080:8080
+        #volumes:
+        # uncomment to mount `my-theme`
+        # - ./keycloak-templates/my-theme:/opt/jboss/keycloak/themes/my-theme
+        # uncomment to mount deployments from `deployments` folder
+      # - ./deployments:/opt/jboss/keycloak/standalone/deployments
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:latest # please use fixed version for real world usage
+    environment:
+      POSTGRES_DB: keycloak
+      POSTGRES_USER: keycloak
+      POSTGRES_PASSWORD: secret
