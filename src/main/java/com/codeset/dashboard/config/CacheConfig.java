@@ -18,6 +18,7 @@ public class CacheConfig {
     public CacheManager cacheManager() {
         CaffeineCacheManager cacheManager = new CaffeineCacheManager("solutions", "cptCodes", "healthPlans", "states");
         cacheManager.setCaffeine(caffeineCacheBuilder());
+        cacheManager.setAsyncCacheMode(true);
         return cacheManager;
     }
 
